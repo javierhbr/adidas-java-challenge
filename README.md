@@ -37,11 +37,23 @@ The 3 services were made in order to scale functionality easily change dependenc
 
 ##Endpoint:
 
+#### Test endpoint:
+There are 2 http files to test the endpoints:
+
+- http-test/public-service.http
+- http-test/subscription-service.http 
+
+Swagger
+- URL: http://localhost:8080/swagger-ui.html
+
 ### Public-service:
 
 - URL API : http://localhost:8080/api/
 - Swagger URL: http://localhost:8080/swagger-ui.html
 
+###### Authentication:
+Use basic authentication: user **challenge** and pwd **challenge**
+`Authorization: Basic Y2hhbGxlbmdlOmNoYWxsZW5nZQ==`
 
 ###### Create a new subscription: 
  Validate request Data and call subscription-service to return the ID of the registrations 
@@ -85,6 +97,8 @@ accept: application/json
 
 ###### Get all subscriptions: 
 It will return all the data from subscription-service, but using pagination to avoid overload the network and the DB.
+- page: it's the number of the page, where 0 is the first.
+- pageSize is the number of items per page.
 
 Example:
 ```json
@@ -133,6 +147,8 @@ accept: application/json
 
 ###### Get all subscriptions: 
 It will return all the data from DB using pagination to avoid overload the network and the DB.
+- page: it's the number of the page, where 0 is the first.
+- pageSize is the number of items per page.
 Example:
 ```json
 GET http://localhost:9090/api/subscriptions?page=0&sizePage=1

@@ -3,20 +3,23 @@
 # Get all subscriptions
 ################
 # curl -X 'GET'
-#  'http://localhost:8080/api/subscriptions?page=0&pageSize=10'
+#  'http://localhost:9090/api/subscriptions?page=0&pageSize=10'
 #  -H 'accept: */*'
 
-GET http://localhost:8080/api/subscriptions?page=0&pageSize=10
-Authorization: Basic Y2hhbGxlbmdlOmNoYWxsZW5nZQ==
+#- page: it's the number of the page, where 0 is the first.
+#- pageSize is the number of items per page.
+
+GET http://localhost:9090/api/subscriptions?page=0&pageSize=10
 accept: */*
 
 ###
+
 ###########################################################################
 ###########################################################################
 # Create a new subscription
 ################
 # curl -X 'POST'
-#  'http://localhost:8080/api/subscriptions'
+#  'http://localhost:9090/api/subscriptions'
 #  -H 'accept: */*'
 #  -H 'Content-Type: application/json'
 #  -d '{
@@ -29,9 +32,8 @@ accept: */*
 #  "consent": true
 #}'
 
-POST http://localhost:8080/api/subscriptions
+POST http://localhost:9090/api/subscriptions
 accept: */*
-Authorization: Basic Y2hhbGxlbmdlOmNoYWxsZW5nZQ==
 Content-Type: application/json
 
 {
@@ -50,22 +52,21 @@ Content-Type: application/json
 # Get details of a subscription
 ################
 # curl -X 'GET'
-#  'http://localhost:8080/api/subscriptions/ID'
+#  'http://localhost:9090/api/subscriptions/ID'
 #  -H 'accept: */*'
-GET http://localhost:8080/api/subscriptions/<ID>
-Authorization: Basic Y2hhbGxlbmdlOmNoYWxsZW5nZQ==
+GET http://localhost:9090/api/subscriptions/<ID>
 accept: */*
 
 ###
+
 ###########################################################################
 ###########################################################################
 # Cancel existing subscription
 ################
 # curl -X 'DELETE'
-#  'http://localhost:8080/api/subscriptions/ID'
+#  'http://localhost:9090/api/subscriptions/ID'
 #  -H 'accept: */*'
-DELETE http://localhost:8080/api/subscriptions/<ID>
-Authorization: Basic Y2hhbGxlbmdlOmNoYWxsZW5nZQ==
+DELETE http://localhost:9090/api/subscriptions/<ID>
 accept: */*
 
 ###
