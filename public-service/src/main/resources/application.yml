@@ -1,0 +1,42 @@
+
+spring:
+  application:
+    name: Newsletter Public service
+
+  data:
+    mongodb:
+      database: challenge
+      uri: mongodb://root:rootpassword@localhost:27018
+
+  jackson:
+    default-property-inclusion: non_null
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: basic
+
+logging:
+  level:
+    com.adidas.subscription.client.SubscriptionClient: DEBUG
+
+
+application-description: public subscription servive
+application-version: 0.1.0
+springdoc:
+    use-fqn: true
+
+
+subscription-service:
+  url: http://localhost:9090/api
+  register-subscription:
+    uri: /subscriptions
+  remove-subscription:
+    uri: /subscriptions/{subscriptionId}
+  subscription-detail:
+    uri: /subscriptions/{subscriptionId}
+  all-subscription:
+    uri: /subscriptions

@@ -1,0 +1,9 @@
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://root:rootpassword@mongo-challenge:27017
+
+  rabbitmq:
+    port: 5672
+    host: rabbitmq-challenge

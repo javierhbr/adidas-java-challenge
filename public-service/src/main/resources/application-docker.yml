@@ -1,0 +1,9 @@
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://root:rootpassword@mongo-challenge:27017
+
+
+subscription-service:
+  url: http://subscription-service:9090/api

@@ -1,0 +1,31 @@
+
+spring:
+  application:
+    name: Newsletter Public service
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: challenge
+    password: challenge
+    listener:
+      simple:
+        retry:
+          enabled: true
+          initial-interval: 3s
+          max-attempts: 6
+          max-interval: 10s
+          multiplier: 2
+
+
+  main:
+    allow-bean-definition-overriding: true
+
+  jackson:
+    default-property-inclusion: non_null
+
+notification-service:
+  queue: notification-queue
+
+server:
+  port: 9595

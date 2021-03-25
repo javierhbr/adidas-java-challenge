@@ -1,0 +1,71 @@
+version: "3.6"
+services:
+
+  rabbitmq-challenge:
+    image: 'rabbitmq:3.6-management-alpine'
+    container_name: rabbitmq-challenge
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      AMQP_URL: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
+      RABBITMQ_DEFAULT_USER: challenge
+      RABBITMQ_DEFAULT_PASS: challenge
+    networks:
+      - challenge-network
+
+  mongo-challenge:
+    image: mongo:latest
+    container_name: mongo-challenge
+    ports:
+      - 27018:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+    networks:
+      - challenge-network
+
+  subscription-service:
+    build: subscription-service/
+    image: subscription-service
+    container_name: subscription-service
+    depends_on:
+      - rabbitmq-challenge
+      - mongo-challenge
+    ports:
+      - 9090:9090
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    networks:
+      - challenge-network
+
+  public-service:
+    build: public-service/
+    image: subscription-public-service
+    container_name: subscription-public-service
+    depends_on:
+      - subscription-service
+    ports:
+      - 8080:8080
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    command: --spring.profiles.active=docker
+    networks:
+      - challenge-network
+
+  email-service:
+    build: email-service/
+    image: email-service
+    container_name: email-service
+    depends_on:
+      - rabbitmq-challenge
+    ports:
+      - 9595:9595
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    networks:
+      - challenge-network
+
+networks:
+  challenge-network:
+    driver: bridge

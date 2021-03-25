@@ -1,0 +1,40 @@
+version: "3.6"
+services:
+
+  public-service:
+    build: public-service/
+    image: subscription-public-service
+    container_name: subscription-public-service
+    ports:
+      - 8080:8080
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    command: --spring.profiles.active=docker
+    networks:
+      - challenge-network
+
+  subscription-service:
+    build: subscription-service/
+    image: subscription-service
+    container_name: subscription-service
+    ports:
+      - 9090:9090
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    networks:
+      - challenge-network
+
+  email-service:
+    build: email-service/
+    image: email-service
+    container_name: email-service
+    ports:
+      - 9595:9595
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    networks:
+      - challenge-network
+
+networks:
+  challenge-network:
+    driver: bridge

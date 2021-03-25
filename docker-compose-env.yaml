@@ -1,0 +1,29 @@
+version: "3.6"
+services:
+  rabbitmq-challenge:
+    image: 'rabbitmq:3.6-management-alpine'
+    container_name: rabbitmq-challenge
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      AMQP_URL: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
+      RABBITMQ_DEFAULT_USER: challenge
+      RABBITMQ_DEFAULT_PASS: challenge
+    networks:
+      - challenge-network
+
+  mongo-challenge:
+    image: mongo:latest
+    container_name:  mongo-challenge
+    ports:
+      - 27018:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+    networks:
+      - challenge-network
+
+networks:
+  challenge-network:
+    driver: bridge

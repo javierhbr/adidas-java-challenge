@@ -1,0 +1,67 @@
+
+plugins {
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+}
+subprojects {
+    group = 'com.adidas'
+    version = '0.0.1-SNAPSHOT'
+    apply plugin: 'java'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'java-library'
+    apply plugin: 'jacoco'
+
+    repositories {
+        jcenter()
+    }
+    dependencyManagement {
+        imports {
+            mavenBom('org.springframework.boot:spring-boot-dependencies:2.3.9.RELEASE')
+            mavenBom ('org.springframework.cloud:spring-cloud-dependencies:2.3.9.RELEASE')
+
+        }
+    }
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+    compileJava {
+        sourceCompatibility = 11
+        targetCompatibility = 11
+    }
+
+    dependencies {
+
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    }
+
+
+    jacocoTestReport {
+        reports {
+            csv.enabled = false
+            xml.enabled = false
+            html.enabled = true
+        }
+        afterEvaluate { // (optional) : to exclude classes / packages from coverage
+            classDirectories.from = files(classDirectories.files.collect {
+                fileTree(
+                        dir: it,
+                        exclude: [ 'com/adidas/subscription/dto/**'
+                                   ,'com/adidas/subscription/exception/**'
+                                   ,'com/adidas/subscription/enums/**'])
+            })
+        }
+    }
+
+    build.dependsOn jacocoTestReport
+
+    test {
+        useJUnitPlatform()
+    }
+
+}
